@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class RandomMain {
 
     public static void main(String[] args) {
+        /*
         java.util.Random rand = new java.util.Random();
         int numberOfTrue = 0;
         int numberOfJavaTrue = 0;
@@ -29,6 +30,7 @@ public class RandomMain {
         System.out.printf("Number of java true: %d%n", numberOfJavaTrue);
         System.out.printf("Number of java false: %d%n", numberOfJavaFalse);
 
+
         int range = (int)Math.pow(2,3);
 
         int[] intArray = new int[range];
@@ -44,5 +46,6 @@ public class RandomMain {
         for(int i = 0; i < range; i++) {
             System.out.printf("Number %d: %d times.%n", i, intArray[i]);
         }
+        */
     }
 }
