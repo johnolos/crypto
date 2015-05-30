@@ -7,6 +7,8 @@ public class Random {
 
     private AtomicLong seed;
 
+    java.util.Random random = new java.util.Random();
+
     private static final long multiplier = 0x5575L;
     private static final long scrambleShift = 0x13L;
     private static final long nextShift = 0x53F131L;
@@ -45,7 +47,9 @@ public class Random {
      * @return Returns a pseudo random double.
      */
     private int generate(int bits) {
-        long oldSeed, newSeed;
+        return random.nextInt((int)Math.pow(2, bits));
+
+/*        long oldSeed, newSeed;
         AtomicLong seed = this.seed;
         do {
             oldSeed = seed.get();
@@ -53,7 +57,7 @@ public class Random {
         } while(!seed.compareAndSet(oldSeed, newSeed));
         int number = (int)newSeed >>> (52 - bits);
         int number2 = number % ((int)Math.pow(2,bits));
-        return number2;
+        return number2;*/
     }
 
 

@@ -26,10 +26,11 @@ public class RandomTest {
     @Test
     public void testInt() throws Exception {
 
-        int numberOfIterations = 1000;
+        int numberOfIterations = 100000;
         int numberOfBits = 4;
-        int expected = numberOfIterations / numberOfBits;
-        int offset = expected / numberOfBits;
+        int numberOfValues = (int)Math.pow(2, numberOfBits);
+        int expected = numberOfIterations / numberOfValues;
+        double offset = expected / (1.90*numberOfValues);
 
         int range = (int)Math.pow(2,numberOfBits);
 
@@ -45,6 +46,7 @@ public class RandomTest {
 
         for(int i = 0; i < range; i++) {
             int freq = intArray[i];
+            // System.out.printf("Expected: %d Frequency: %d Offset: %f.%n", expected, freq, offset);
             assertEquals(expected, freq, offset);
         }
 
