@@ -1,4 +1,12 @@
-*.~
+*.*~
 out/
-.iml
-.class
+*.iml
+*.class
+.settings
+/.settings/
+.project
+.classpath
+/.idea/
+.DS_Store
+/bin/*
+/out/*
