@@ -8,52 +8,48 @@ import static org.junit.Assert.*;
 public class RandomTest {
 
     private Random random;
-    private Random randomSeeded;
 
     @Before
     public void setUp() throws Exception {
         random = new Random();
-        randomSeeded = new Random((System.nanoTime() % 1024) + System.currentTimeMillis());
     }
-
 
     @Test
     public void testRandomInt() throws Exception {
+        int firstLimit = 40;
 
-        int numberOfIterations = 100000;
-        int numberOfBits = 4;
-        int numberOfValues = (int)Math.pow(2, numberOfBits);
-        int expected = numberOfIterations / numberOfValues;
-        double offset = expected / (1.70*numberOfValues);
-
-        int range = (int)Math.pow(2,numberOfBits);
-
-        int[] intArray = new int[range];
-        for(int i = 0; i < range; i++) {
-            intArray[i] = 0;
+        for(int i = 0; i < 10000; i++) {
+            int number = random.randomInt(firstLimit);
+            assertTrue(number >= 0 && number <= firstLimit);
         }
 
-        for(int i = 0; i < numberOfIterations; i++) {
-            int number = random.randomInt(numberOfBits);
-            intArray[number]++;
+        int base = 1024;
+        int secondLimit = 2048;
+        for(int i = 0; i < 10000; i++) {
+            int number = random.randomInt(base, secondLimit);
+            assertTrue(number >= base && number < secondLimit);
         }
 
-        for(int i = 0; i < range; i++) {
-            int freq = intArray[i];
-            System.out.printf("Expected: %d Frequency: %d Offset: %f.%n", expected, freq, offset);
-            assertEquals(expected, freq, offset);
-        }
-
-        /*
-        for(int i = 0; i < range; i++) {
-            int number = random.randomInt(0, i);
-        }
-        */
     }
-
 
     @Test
-    public void testRandomLong() throws Exception {
-        System.out.println(random.randomInt(32));
+    public void testRandomBoolean() throws Exception {
+        int countTrue = 0;
+        int iterations = 10000000;
+        int i = 0;
+        while(i < iterations) {
+            if(random.randomBoolean())
+                countTrue++;
+            i++;
+        }
+        double percentageTrue = countTrue / (double)iterations;
+        double percentageFalse = (iterations - countTrue) / (double)iterations;
+
+        System.out.printf("Testing random boolean per %d iterations.%n", iterations);
+        System.out.printf("Percentage of  true: %f.%n", percentageTrue);
+        System.out.printf("Percentage of false: %f.%n", percentageFalse);
+
+        assertEquals(0.50, percentageTrue, 0.0001);
     }
+
 }

@@ -15,7 +15,7 @@ public class Random {
      * instances created by the same constructor.
      */
     public Random() {
-        this(System.nanoTime());
+        this(System.currentTimeMillis() + System.nanoTime());
     }
 
     /**
@@ -38,7 +38,8 @@ public class Random {
 
     /**
      * Generate a new seed used when generating a pseudo random number generator.
-     * The current implementation is using XORSHIFT* algorithm.
+     * The current implementation is using XORSHIFT* algorithm to create new seed
+     * state from current seed state.
      */
     private void nextSeed() {
         long seed = this.seed.get();
@@ -51,11 +52,14 @@ public class Random {
     /**
      * Generate a pseudo random number of 32 bytes. Then the generator selects number
      * of bits from most significant bit to least significant bit.
+     * Produces a random signed integer between [0,2.147.483.647] (31 bits) which is
+     * the range of a normal 32 bit integer.
      * @return Returns a pseudo random integer.
      */
     private int generate(int bits) {
+        assert bits >= 1 && bits <= 31;
         nextSeed();
-        return extractBits(this.seed.get() * multiplier, 32, 32 + bits);
+        return extractBits(this.seed.get() * multiplier, 0, bits);
     }
 
     /**
@@ -69,10 +73,12 @@ public class Random {
      * @return bits from value in range [begin, end).
      */
     private int extractBits(long value, int begin, int end) {
-        long mask = ( 1 << (end - begin)) - 1;
-        // System.out.println(value);
-        int bits = (int)((value >> begin) & mask);
-        return bits;
+        assert end >= 1 && end <= 31;
+        assert begin >= 0 && begin <= 30;
+        assert end > begin;
+        long mask = (1L << (end - begin)) - 1;
+        long bits = (value >> begin) & mask;
+        return (int)bits;
     }
 
 
@@ -84,15 +90,15 @@ public class Random {
     public int randomInt(int n){
         assert n > 0;
         assert n < Integer.MAX_VALUE;
-        return generate(n);
+        return randomInt() % n;
     }
 
     /**
-     * Produces a pseudo random integer.
+     * Produces a pseudo random integer of 31 bits.
      * @return Returns a pseudo random.
      */
     public int randomInt() {
-        return generate(32);
+        return generate(31);
     }
 
     /**
@@ -112,15 +118,20 @@ public class Random {
     public int randomInt(int base, int n) {
         assert base > 0;
         assert n >= base;
-        return generate(32)*(n-base) + base;
+        return (randomInt() % (n - base)) + base;
     }
 
     public long randomLong() {
         return ((long)(generate(32)) << 32) + generate(32);
     }
 
-
+    /**
+     * Set state seed to current instanced.
+     * The algorithm will scramble the seed given.
+     * @param seed Seed to be used.
+     */
     public void setSeed(long seed) {
-        this.seed.set(seed);
+        this.seed.set(scrambleSeed(seed));
     }
+
 }
