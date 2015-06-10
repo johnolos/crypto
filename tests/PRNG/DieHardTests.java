@@ -34,26 +34,41 @@ public class DieHardTests {
         int n = (int)Math.pow(2, 24);
         int m = (int)Math.pow(2, 10);
 
-        int[] birthdays = new int[n];
+        boolean[] birthdays = new boolean[n];
 
         for(int i = 0; i < m; i++) {
             int num = random.nextInt(n);
-            birthdays[num] = birthdays[num] + 1;
+            birthdays[num] = true;
         }
 
-        int numberOfSharedBirthdays = 0;
+        List<Integer> listOfSpaceNumbers = new ArrayList<>();
+        int lastNumber = 0;
+        int currentNumber;
         for(int i = 0; i < n; i++) {
-            if(birthdays[i] > 1) {
-                numberOfSharedBirthdays++;
+            if(birthdays[i]) {
+                currentNumber = i;
+                listOfSpaceNumbers.add(currentNumber - lastNumber);
+                lastNumber = currentNumber;
             }
         }
-        //System.out.println(numberOfSharedBirthdays);
+
+        double sumOfSpaceNumbers = 0;
+        for(int i : listOfSpaceNumbers) {
+            sumOfSpaceNumbers+=i;
+        }
+
+        double mean = sumOfSpaceNumbers / listOfSpaceNumbers.size();
+
+        System.out.printf("Sum: %f.%n", sumOfSpaceNumbers);
+        System.out.printf("Mean of spacing: %f.%n", mean);
+        double expected = Math.pow(m, 3.0) / (4 * n);
+        assertEquals(expected, mean, 0.0);
     }
 
 
     @Test
     public void testMinimumDistance() throws Exception {
-        int numberOfTests = 10000;
+        int numberOfTests = 10;
         double minimalDistanceSquared = 0;
         for(int i = 0; i < numberOfTests; i++) {
             if(i % 20 == 0) {
