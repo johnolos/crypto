@@ -49,7 +49,7 @@ public class RandomTest {
         System.out.printf("Percentage of  true: %f.%n", percentageTrue);
         System.out.printf("Percentage of false: %f.%n", percentageFalse);
 
-        assertEquals(0.50, percentageTrue, 0.0001);
+        assertEquals(0.50, percentageTrue, 0.001);
     }
 
 }
