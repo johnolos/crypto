@@ -1,0 +1,39 @@
+\section{Tests}
+As mentioned earlier, we have chosen two of the fifteen diehard tests. 
+\begin{itemize}
+\item \textbf{The Runs test: }Create a sequence of length $n$, with randomly generated numbers. Count the number of ascending subsequences, $s^+$, and the number of descending subsequences, $s^-$. The ratio between the two should be close to $\frac{s^+}{s^-} = 1$.
+
+\item \textbf{Minimal Distance: }Choose $n = 8000$ random points in a $10000 \times 10000$ square. Find the minimum distance, \textit{d}, between the $\frac{n^2 -n}{2}$ pairs of points. The test is passed if the square of the minimum distance, $d^2£$, is suffieciently close to being exponentially distributed with mean 0.995. 
+\end{itemize}
+
+\subsection{Results}
+\subsubsection{The Runs test}
+We ran the Runs test 10000 times with the length of the sequence, $n = 10000$. For each time we ran the test we calculated the ratio $\frac{s^+}{s^-}$ for a randomly generated sequence. After we have calculated the ratio between the number of ascending subsequences and the number of descending sequences 10000 times, we calculated the average ratio. The result we got was an average ratio of 1.0000027. We compared our implementation with Java's built-in random generator by running the same test with the same sequence length 10000 times using Java's built-in Random. The result we got from this was an average ratio of 1.000001. Using JUnit for testing the execution time is displayed, so we include it as an addition to the test. Execution time for our implementation: 2.346s. And the execution time for Java: 2.384s.
+
+\subsubsection{Minimum Distance}
+Again, we ran the test 10000 times following the description of the test\cite{jdiehard}. The mean minimum distance we got after the executions was $d^2 = 1.3997$. Exectution time for out implementation: 0.870s. And the execution time for Java: 0.904s.
+
+\subsection{Discussion}
+\subsubsection{The Runs test}
+From this test the difference between the expected result and the actual result was quite small ( $< 1$ \textperthousand). Our implementation performs slighly worse than Java's built-in random generator, but again the difference is very small. We have not studied further the probabilty that the number of ascending subsequences is exactly the same as the number of descending subsequences, but by observing the ratio of individual tests (on only one sequence, not 10000) even with large $n \ge 1000000$ the ratio is surprisingly often exactly 1.0. The same goes for with Java's built-in random generator. We also found it curious that the ratio varied more with a low n. As for the execution times we assumes that no conclusion can be drawn because because of the small difference between them. The difference can have been caused background processes on our laptops or other variances in our implementation.
+
+\subsubsection{Minimum Distance}
+From the minimum distance test our result differs from the expected mean of 0.995. We express the difference like so:
+
+\[1.3997 - 0.995 = 0.4047\] 
+
+\[\frac{0.4047}{0.995} = 0.4067 \approx 40.1 \%\]
+
+From this we can see that there is a difference of approximately 40.1 \% from the expected mean. For comparison we ran the same test using Java's built-in pseudorandom generator. This gives us an idea of our difference is significant or not. Using the Java generator the mean of the square of the minimum distance were $d^2= 1.4218$. We compare Java's build in pseudorandom generator with the expected mean:
+
+\[1.4218 - 0.995 = 0.4268\]
+
+\[\frac{0.4268}{0.995} = 0.4289 \approx 42.9 \%\]
+Compared to the mean we achieved, we get
+
+\[|0.4047 - 0.4268| = 0.0221\]
+
+\[\frac{0.0221}{0.4047} = 0.0546 \approx 5.5 \%\] 
+In the minimum distance test our implementation has a smaller difference from the expected mean compared to Java's built in pseudorandom generator. The difference between the two implementations is approximately 5.5 \%. 
+
+The same goes for this test when it comes to execution times; no significant difference.

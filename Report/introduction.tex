@@ -1,0 +1,7 @@
+\section{Introduction}
+A pseudorandom number generator is used in a wide range of applications and methods. It is found most commonly in video games where content is generated automatically by an algorithm rather than by a game designer or programmer, in various scientific simulations and last but not least in cryptographic applications that require the outputs to be unpredictable compared to earlier outputs.
+
+Our goal with our pseudorandom number generator is to make is as close to statistically random as possible as well as keeping the algorithm fast. To test if our generator is statistically random we will implement some of the diehard tests developed by George Marsaglia\cite{diehard}\cite{jdiehard}.
+
+\subsection{The diehard tests}
+The Diehard tests are statistical tests designed to measure the quality of random number generators. The battery of tests consists of fifteen different tests, designed to test different aspects of random. The more tests we perform the more accurate the results will be, but we think it is sufficient to implement two of them to test our pseudorandom number generator. 

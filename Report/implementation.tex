@@ -1,0 +1,8 @@
+\section{Implementation}
+For our implementation of the pseudorandom number generator we have decided to base our algorithm of the xorshift* algorithm which is build of the xorshift algorithm\cite{xorshift}. The xorshift algorithm generates the pseudorandom numbers by taking the exclusive or of a number with a bit shifted version of itself several times. This algorithm is both very efficient (extremely fast, according to Marsaglia) and takes up less space than other methods. The downside is that the input number needs to be chosen such that the period of the series of output is as long as possible. The period is the number of output numbers generated in a sequence before the same sequence occurs again. 
+
+The xorshift* algorithm takes an xorshift generator and does additional operation on the output. It takes the output modulo the size of the word as a non-linear transformation. 
+
+\subsection{Discussion}
+It has been shown that Marsaglia's xorshift RNGs is quite similar to the linear feedback shift register (LFSR) generator\cite{brent}. In fact, with the right inputs the xorshift creates an indentical sequence compared to the LFSR. Performance wise, the xorshift is considered better both faster and generates better result in general.
+
