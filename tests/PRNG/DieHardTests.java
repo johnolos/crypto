@@ -13,8 +13,8 @@ import org.junit.Test;
  */
 public class DieHardTests {
 
-    private Random random;
-//    java.util.Random random = new java.util.Random();
+//    private Random random;
+    java.util.Random random = new java.util.Random();
 
     class Point {
         int x, y;
@@ -26,8 +26,8 @@ public class DieHardTests {
     
     @Before
     public void setUp() throws Exception {
-//        random = new java.util.Random();
-    	random = new Random();
+        random = new java.util.Random();
+//    	random = new Random();
     }
     
     class tuple{
@@ -41,18 +41,29 @@ public class DieHardTests {
     
     @Test
     public void testRuns(){
-    	ArrayList<Integer> sequence = new ArrayList<Integer>();
     	
-    	int sequenceLength = 100000;
+    	float ratio = 0;
+    	int sequenceLength = 10000;
     	
-    	for(int i = 0; i < sequenceLength; i++){
-    		sequence.add(random.randomInt());
+    	for (int j = 0; j < 10000; j++) {
+    		
+//    		if(j % 100 == 0)
+//    			System.out.println(j);
+			
+	    	
+    		ArrayList<Integer> sequence = new ArrayList<Integer>();
+	    	for(int i = 0; i < sequenceLength; i++){
+	    		sequence.add(random.nextInt());
+//	    		sequence.add(random.randomInt());
+	    	}
+	    	
+	    	tuple t = findRuns(sequence);
+	    	ratio += t.up/(float)t.down;
+//	    	System.out.println("UP: " + t.up + "\nDOWN: " + t.down + "\nRatio: " + ratio);
+	    	
     	}
-    	
-    	tuple t = findRuns(sequence);
-    	float ratio = t.up/(float)t.down;
-    	System.out.println("UP: " + t.up + "\nDOWN: " + t.down + "\nRatio: " + ratio);
-    	assertEquals(1.0, ratio ,0.001);
+    	System.out.println(ratio/10000);
+    	assertEquals(1.0, ratio/10000 ,0.001);
     }
     
     public tuple findRuns(ArrayList<Integer> seq){
@@ -106,10 +117,10 @@ public class DieHardTests {
         List<Point> points = new ArrayList<>();
         int x, y;
         for(int i = 0; i < n; i++) {
-//            x = random.nextInt(l);
-//            y = random.nextInt(l);
-        	x = random.randomInt(l);
-        	y = random.randomInt(l);
+            x = random.nextInt(l);
+            y = random.nextInt(l);
+//        	x = random.randomInt(l);
+//        	y = random.randomInt(l);
             points.add(new Point(x,y));
         }
 
